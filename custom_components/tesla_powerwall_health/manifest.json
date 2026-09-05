@@ -1,11 +1,13 @@
 {
   "domain": "tesla_powerwall_health",
   "name": "Tesla Powerwall Health",
-  "codeowners": ["@kayloehmann"],
+  "codeowners": [
+    "@kayloehmann"
+  ],
   "config_flow": true,
   "documentation": "https://github.com/kayloehmann/tesla-powerwall-health",
   "integration_type": "device",
   "iot_class": "local_polling",
   "issue_tracker": "https://github.com/kayloehmann/tesla-powerwall-health/issues",
-  "version": "0.1.0"
+  "version": "0.1.1"
 }

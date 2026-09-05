@@ -1,0 +1,53 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "description": "Zugangsdaten für den lokalen Login am Tesla Gateway 2 (Powerwall). E-Mail und Passwort sind der lokale Kunden-Login aus der Tesla-App-Einrichtung, nicht der tesla.com-Account.",
+        "data": {
+          "host": "Host / IP-Adresse",
+          "email": "E-Mail",
+          "password": "Passwort",
+          "nameplate_capacity_wh": "Nennkapazität (Wh)"
+        },
+        "data_description": {
+          "host": "Hostname oder IP-Adresse des Gateways (z. B. 10.111.0.79).",
+          "email": "E-Mail des lokalen Gateway-Logins.",
+          "password": "Passwort des lokalen Gateway-Logins.",
+          "nameplate_capacity_wh": "Nutzbare Kapazität im Neuzustand, zur Berechnung der Degradation (Powerwall 2: 13500)."
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Verbindung zum Gateway fehlgeschlagen. Host prüfen.",
+      "invalid_auth": "Anmeldung fehlgeschlagen. E-Mail/Passwort prüfen.",
+      "unknown": "Unerwarteter Fehler."
+    },
+    "abort": {
+      "already_configured": "Dieses Gateway ist bereits eingerichtet."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "battery_level": { "name": "Ladezustand" },
+      "usable_capacity": { "name": "Nutzbare Kapazität" },
+      "capacity_degradation": { "name": "Kapazität (% der Nennleistung)" },
+      "backup_reserve": { "name": "Backup-Reserve" },
+      "battery_power": { "name": "Batterieleistung" },
+      "site_power": { "name": "Netzleistung" },
+      "load_power": { "name": "Verbrauchsleistung" },
+      "solar_power": { "name": "Solarleistung" },
+      "pack_voltage": { "name": "Spannung" },
+      "pack_frequency": { "name": "Frequenz" },
+      "pack_current": { "name": "Strom" },
+      "energy_charged_lifetime": { "name": "Geladen (gesamt)" },
+      "energy_discharged_lifetime": { "name": "Entladen (gesamt)" },
+      "equivalent_full_cycles": { "name": "Äquivalente Vollzyklen" },
+      "operating_mode": { "name": "Betriebsmodus" },
+      "grid_status": { "name": "Netzstatus" }
+    },
+    "binary_sensor": {
+      "battery_fault": { "name": "Störung" },
+      "grid_connected": { "name": "Netzverbindung" }
+    }
+  }
+}

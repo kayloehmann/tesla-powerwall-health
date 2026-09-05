@@ -1,0 +1,53 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "description": "Local login for the Tesla Gateway 2 (Powerwall). Email and password are the local customer login created during the Tesla app setup, not your tesla.com account.",
+        "data": {
+          "host": "Host / IP address",
+          "email": "Email",
+          "password": "Password",
+          "nameplate_capacity_wh": "Nameplate capacity (Wh)"
+        },
+        "data_description": {
+          "host": "Hostname or IP address of the Gateway (e.g. 10.111.0.79).",
+          "email": "Email of the local Gateway login.",
+          "password": "Password of the local Gateway login.",
+          "nameplate_capacity_wh": "Usable capacity when new, used to compute degradation (Powerwall 2: 13500)."
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect to the Gateway. Check the host.",
+      "invalid_auth": "Login failed. Check email/password.",
+      "unknown": "Unexpected error."
+    },
+    "abort": {
+      "already_configured": "This Gateway is already configured."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "battery_level": { "name": "State of charge" },
+      "usable_capacity": { "name": "Usable capacity" },
+      "capacity_degradation": { "name": "Capacity (% of nameplate)" },
+      "backup_reserve": { "name": "Backup reserve" },
+      "battery_power": { "name": "Battery power" },
+      "site_power": { "name": "Site power" },
+      "load_power": { "name": "Load power" },
+      "solar_power": { "name": "Solar power" },
+      "pack_voltage": { "name": "Voltage" },
+      "pack_frequency": { "name": "Frequency" },
+      "pack_current": { "name": "Current" },
+      "energy_charged_lifetime": { "name": "Charged (lifetime)" },
+      "energy_discharged_lifetime": { "name": "Discharged (lifetime)" },
+      "equivalent_full_cycles": { "name": "Equivalent full cycles" },
+      "operating_mode": { "name": "Operating mode" },
+      "grid_status": { "name": "Grid status" }
+    },
+    "binary_sensor": {
+      "battery_fault": { "name": "Fault" },
+      "grid_connected": { "name": "Grid connection" }
+    }
+  }
+}

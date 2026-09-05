@@ -27,6 +27,22 @@ class TeslaGatewayConnectionError(Exception):
     """Raised when the Gateway cannot be reached."""
 
 
+def create_gateway_session() -> aiohttp.ClientSession:
+    """Build a dedicated session for talking to the Gateway.
+
+    The Gateway is always addressed by IP, and aiohttp's cookie jar
+    silently drops cookies for IP-address hosts unless ``unsafe=True`` is
+    set. Home Assistant's shared client session doesn't allow overriding
+    that, so callers must use a session-local jar instead -- otherwise the
+    login cookie from ``/api/login/Basic`` never gets stored and every
+    following request comes back 403.
+    """
+    return aiohttp.ClientSession(
+        cookie_jar=aiohttp.CookieJar(unsafe=True),
+        connector=aiohttp.TCPConnector(ssl=False),
+    )
+
+
 class TeslaGatewayApiClient:
     """Client for the Tesla Gateway 2 local API (https://<gateway-ip>/api/...)."""
 

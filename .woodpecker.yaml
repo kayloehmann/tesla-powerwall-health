@@ -1,0 +1,42 @@
+when:
+  - event: pull_request
+  - event: push
+    branch: main
+
+clone:
+  git:
+    image: woodpeckerci/plugin-git:2.12.1@sha256:b8d2401997be68ec25d62bd753fe5d30236e029fe007a5e823177e0e485ae205
+    settings:
+      depth: 0
+      partial: false
+      lfs: false
+      recursive: false
+
+steps:
+  gitleaks:
+    image: ghcr.io/gitleaks/gitleaks:v8.30.1@sha256:c00b6bd0aeb3071cbcb79009cb16a60dd9e0a7c60e2be9ab65d25e6bc8abbb7f
+    commands:
+      - gitleaks git --redact --log-opts="--full-history --diff-merges=first-parent HEAD" .
+
+  validate:
+    image: python:3.13.9-alpine@sha256:e5fa639e49b85986c4481e28faa2564b45aa8021413f31026c3856e5911618b1
+    commands:
+      - python -m compileall -q custom_components
+      - python -c 'import json, pathlib; [json.loads(path.read_text()) for path in pathlib.Path(".").rglob("*.json")]'
+
+  hassfest:
+    # Official hassfest image, pinned to its linux/amd64 platform manifest.
+    # The Mac Studio Docker backend provides amd64 emulation; amd64 agents run it natively.
+    image: ghcr.io/home-assistant/hassfest@sha256:25e4b0e52fea78c037b562b2d68772e7c7d7418c2aa90847b7b0df0dcab63a8e
+    commands:
+      - /usr/src/homeassistant/script/hassfest/docker/entrypoint.sh
+
+  hacs:
+    # Use the official HACS validator code against the checked-out Gitea revision.
+    # The upstream action itself only accepts GitHub repositories and would not
+    # validate an unmirrored Gitea pull-request commit.
+    image: ghcr.io/hacs/action@sha256:35241cb9a8ce6a83f3fbe893880283419c59bea26e71d4c99e279856518bde25
+    environment:
+      GITEA_API_URL: https://gitea.loehmann.synology.me/api/v1
+    commands:
+      - PYTHONPATH=/hacs python3 .woodpecker/hacs_validate.py
